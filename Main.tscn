@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://TextLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game_over.gd" type="Script" id=2]
+[ext_resource path="res://FadeAnim.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.231373, 0.454902, 0.6, 1 )
@@ -19,7 +20,7 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 448, 216 )
+extents = Vector2( 448, 248 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 content_margin_left = 5.0
@@ -27,6 +28,75 @@ content_margin_right = 5.0
 content_margin_top = 5.0
 content_margin_bottom = 5.0
 bg_color = Color( 0, 0.219608, 0.435294, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.00784314, 0.423529, 0.478431, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0.521569 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "panel_fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PanelFade:custom_styles/panel:bg_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.521569 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "text_blink"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("LabelStart:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.0862745 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 448, 16 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.0313726, 0, 0.419608, 1 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "text_play_again"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayAgain:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.0588235 ) ]
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -36,6 +106,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -61,45 +132,21 @@ __meta__ = {
 
 [node name="PanelEntered" type="Panel" parent="."]
 margin_left = 80.0
-margin_top = 64.0
 margin_right = 976.0
 margin_bottom = 496.0
 custom_styles/panel = SubResource( 2 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Area2D" type="Area2D" parent="PanelEntered"]
-visible = false
-position = Vector2( 448, 216 )
-__meta__ = {
-"_edit_group_": true
-}
+position = Vector2( 448, 248 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PanelEntered/Area2D"]
 shape = SubResource( 3 )
 
 [node name="TextSpawner" type="Node2D" parent="."]
-
-[node name="TextLabel" parent="TextSpawner" instance=ExtResource( 2 )]
-margin_left = 302.0
-margin_top = -44.0
-margin_right = 398.0
-margin_bottom = -12.0
-
-[node name="TextLabel2" parent="TextSpawner" instance=ExtResource( 2 )]
-margin_left = 486.0
-margin_top = -100.0
-margin_right = 582.0
-margin_bottom = -68.0
-text = "godot"
-
-[node name="TextLabel3" parent="TextSpawner" instance=ExtResource( 2 )]
-margin_left = 654.0
-margin_top = -140.0
-margin_right = 750.0
-margin_bottom = -108.0
-text = "lazy"
 
 [node name="Score" type="Label" parent="."]
 margin_left = 216.0
@@ -112,21 +159,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Life" type="Label" parent="."]
-margin_left = 232.0
+[node name="Try" type="Label" parent="."]
+margin_left = 240.0
 margin_top = 552.0
-margin_right = 275.0
+margin_right = 279.0
 margin_bottom = 566.0
 rect_scale = Vector2( 1.5, 1.5 )
-text = "Life : 5"
+text = "Try : 5"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextEdit" type="TextEdit" parent="."]
-margin_left = 424.0
+margin_left = 429.521
 margin_top = 512.0
-margin_right = 630.0
+margin_right = 635.521
 margin_bottom = 576.0
 custom_styles/focus = SubResource( 4 )
 custom_styles/normal = SubResource( 4 )
@@ -136,18 +183,113 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
+[node name="PauseButton" type="Button" parent="."]
 pause_mode = 2
-margin_left = 719.0
-margin_top = 534.071
-margin_right = 786.0
-margin_bottom = 560.071
+margin_left = 726.026
+margin_top = 527.565
+margin_right = 793.026
+margin_bottom = 553.565
+custom_styles/normal = SubResource( 9 )
 text = "Pause"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="FadeAnim" type="Node2D" parent="."]
+pause_mode = 2
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PanelFade" type="Panel" parent="FadeAnim"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelStart" type="Label" parent="FadeAnim"]
+margin_left = 360.0
+margin_top = 280.0
+margin_right = 524.0
+margin_bottom = 294.0
+rect_scale = Vector2( 2, 2 )
+text = "Press 'Spacebar' to start!!!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeAnim"]
+autoplay = "text_blink"
+anims/panel_fade = SubResource( 7 )
+anims/text_blink = SubResource( 6 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 752, 496 )
+__meta__ = {
+"_gizmo_extents_": 30.6
+}
+
+[node name="AreaExit" type="Area2D" parent="."]
+position = Vector2( 528, 520 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+shape = SubResource( 8 )
+
+[node name="Node2D" type="Node2D" parent="."]
+pause_mode = 2
+visible = false
+script = ExtResource( 2 )
+
+[node name="Panel" type="Panel" parent="Node2D"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_styles/panel = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Label" parent="Node2D"]
+margin_left = 360.0
+margin_top = 159.673
+margin_right = 449.0
+margin_bottom = 173.673
+rect_scale = Vector2( 4, 4 )
+text = "Game Over!!! "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BestScore" type="Label" parent="Node2D"]
+margin_left = 216.0
+margin_top = 245.071
+margin_right = 305.0
+margin_bottom = 259.071
+rect_scale = Vector2( 4, 4 )
+text = "Best Score : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayAgain" type="Label" parent="Node2D"]
+margin_left = 336.952
+margin_top = 331.571
+margin_right = 522.952
+margin_bottom = 345.571
+rect_scale = Vector2( 2, 2 )
+text = "press 'spacebar' to play again"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D"]
+autoplay = "text_play_again"
+anims/text_play_again = SubResource( 11 )
+
 [connection signal="area_entered" from="PanelEntered/Area2D" to="." method="_on_Area2D_area_entered"]
-[connection signal="area_exited" from="PanelEntered/Area2D" to="." method="_on_Area2D_area_exited"]
 [connection signal="text_changed" from="TextEdit" to="." method="_on_TextEdit_text_changed"]
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="PauseButton" to="." method="_on_PauseButton_pressed"]
+[connection signal="animation_finished" from="FadeAnim/AnimationPlayer" to="FadeAnim" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="area_entered" from="AreaExit" to="." method="_on_AreaExit_area_entered"]
