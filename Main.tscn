@@ -29,7 +29,7 @@ content_margin_top = 5.0
 content_margin_bottom = 5.0
 bg_color = Color( 0, 0.219608, 0.435294, 1 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.00784314, 0.423529, 0.478431, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -40,7 +40,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0, 0, 0, 0.521569 )
 
 [sub_resource type="Animation" id=7]
@@ -58,8 +58,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0.521569 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "text_blink"
+[sub_resource type="Animation" id=8]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -75,7 +74,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.0862745 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 448, 16 )
 
 [sub_resource type="StyleBoxFlat" id=10]
@@ -189,7 +188,7 @@ margin_left = 726.026
 margin_top = 527.565
 margin_right = 793.026
 margin_bottom = 553.565
-custom_styles/normal = SubResource( 9 )
+custom_styles/normal = SubResource( 5 )
 text = "Pause"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -205,7 +204,7 @@ __meta__ = {
 [node name="PanelFade" type="Panel" parent="FadeAnim"]
 margin_right = 1024.0
 margin_bottom = 600.0
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -224,7 +223,7 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FadeAnim"]
 autoplay = "text_blink"
 anims/panel_fade = SubResource( 7 )
-anims/text_blink = SubResource( 6 )
+anims/text_blink = SubResource( 8 )
 
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( 752, 496 )
@@ -236,7 +235,7 @@ __meta__ = {
 position = Vector2( 528, 520 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="Node2D" type="Node2D" parent="."]
 pause_mode = 2
@@ -263,10 +262,10 @@ __meta__ = {
 }
 
 [node name="BestScore" type="Label" parent="Node2D"]
-margin_left = 216.0
-margin_top = 245.071
-margin_right = 305.0
-margin_bottom = 259.071
+margin_left = 298.5
+margin_top = 248.0
+margin_right = 387.5
+margin_bottom = 262.0
 rect_scale = Vector2( 4, 4 )
 text = "Best Score : "
 __meta__ = {

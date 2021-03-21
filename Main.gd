@@ -21,7 +21,7 @@ var word_list = ["word", "godotte", "giraffe", "score", "godot", "billboard", "c
 "chicken", "product", "airplane", "dictionary", "animation", "earth", "anime", "number", "hello", "world", "programming", "coding", "integer", "school",
 "platinum", "merchant", "eye", "squid", "monkey", "banana", "apple", "food", "anatomy", "elastic", "going", "door", "node", "scritping", "hard", "impossible",
 "astronaut", "music", "computer", "shop", "banking", "durian", "keyboard", "piano", "guitar", "pimple", "face", "water", "ocean", "sky", "sun", "running",
-"dinosaur", "citrus", "time", "minute", "television", "impudent", "angry", "smile", "sadistic", "suprise", "coffe", "milk", "raisin", "invisible", "normal"]
+"dinosaur", "citrus", "time", "minute", "television", "impudent", "angry", "smile", "sadistic", "suprise", "coffee", "milk", "raisin", "invisible", "normal"]
 
 # spawn word every (n)second
 var spawner_timer = 1
@@ -41,8 +41,9 @@ func _physics_process(delta):
 		s += 1
 		ms = 0
 	if s > spawner_timer:
+		# get random number for the index of the word_list array
 		current_int = random_number()
-		
+		# instance label
 		var n = text_label.instance()
 		n.text = word_list[current_int]
 		n.rect_position = Vector2(rand_int(), -44)
@@ -87,6 +88,7 @@ func rand_int():
 
 
 func random_number():
+	# generate random number base on 0 to (n-1) of array_size
 	rng.randomize()
 	return rng.randi_range(0, word_list.size() - 1)
 
@@ -123,8 +125,10 @@ func _on_AreaExit_area_entered(area):
 	
 	print("word after delete", word_entered)
 	
+	# reduce the number of try if the word arent type correctly
 	try -= 1
 	$Try.text = "Try : " + str(try)
+	# if try has 0,the game is over
 	if try < 1:
 		$Node2D.show()
 		$Node2D/BestScore.text = "Best Score : " + str(score)
